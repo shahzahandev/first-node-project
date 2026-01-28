@@ -10,5 +10,8 @@
     "Demo"
   ],
   "author": "Shahzahan Siraj",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
