@@ -1,29 +1,41 @@
-// const http = require("node:http");
+const express = require('express')
+const app = express()
+app.use(express.json())
 
-// const server = http.createServer((req, res) => {
-//     // console.log(req.headers);
-//     // console.log(req.method);
-//     // console.log(req.url);
-//     if(req.method == 'GET' && req.url == '/home'){ 
-//      res.writeHead( 200, {"Content-Type" : "text/html"});
-//      res.end('<h1>siraj<h1/>')
-//     }
-// })
+app.get('/banner', (req, res) => {
+    let { userName, email, password } = req.body
+    // console.log(userName, email, password); 
 
-// server.listen(5000, 'localhost', () => {
-//     console.log("Server running......");
-// })
+    let err = []
 
-const express = require('express');
-const app = express();
+    if (!userName) {             //username err
+        err.push({
+            errType: "userName",
+            message: "userName Required."
+        })
+    }
+    if (!email) {                //email err
+        err.push({
+            errType: "email",
+            message: "email Required."
+        })
+    }
+    if (!password) {             //password err
+        err.push({
+            errType: "password",
+            message: "password Required."
+        })
+    }
+    res.send({
+        success: err.length == 0 ? true : false,
+        message: err.length == 0 ? "Login successfully Completed." : "Login Failed.",
+        err: err.length == 0 ? null : err
+    })
+})
 
-app.use('/home', (req, res) => {
-    res.send('<h1>Hellow world-2</h1>');
-});
-
-app.listen(5000, () => {
-    console.log('Server is running.........');
-});
+app.listen(8000, () => {
+    console.log("The server running.........");
+})
 
 
 
